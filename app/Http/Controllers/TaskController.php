@@ -83,9 +83,12 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         
-        return view("tasks.show",[
+        if(\Auth::id() === $task->user_id) {
+           return view("tasks.show",[
             "task" => $task,
             ]);
+        }
+        return redirect("/");
     }
 
     /**
@@ -120,12 +123,17 @@ class TaskController extends Controller
         
         $task = Task::findOrFail($id);
         
+        if(\Auth::id() === $task->user_id){
+        
         //タスクの更新
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         
         return redirect('/');
+        }
+        
+        return redirect("/");
     }
 
     /**

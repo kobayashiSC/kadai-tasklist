@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for practice-tasklist on 2023-11-29T03:25:40Z
+# fly.toml app configuration file generated for practice-tasklist-rough-frost-3309 on 2023-12-01T07:28:47Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "practice-tasklist"
+app = "practice-tasklist-rough-frost-3309"
 primary_region = "nrt"
 console_command = "php /var/www/html/artisan tinker"
 
@@ -13,15 +13,15 @@ console_command = "php /var/www/html/artisan tinker"
     PHP_VERSION = "8.1"
 
 [env]
-  APP_URL = "https://practice-tasklist.fly.dev"
+  APP_DEBUG = "true"
+  APP_ENV = "production"
   APP_NAME = "tasklist"
-  APP_DEBUG = "false"
+  APP_URL = "https://practice-tasklist.fly.dev"
   DB_CONNECTION = "pgsql"
+  DB_DATABASE = "postgres"
   DB_HOST = "db.vdhrltiktjskcumpgfpe.supabase.co"
   DB_PORT = "5432"
-  DB_DATABASE = "postgres"
   DB_USERNAME = "postgres"
-  APP_ENV = "production"
   LOG_CHANNEL = "stderr"
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
