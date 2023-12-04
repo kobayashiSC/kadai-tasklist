@@ -20,11 +20,9 @@ class TaskController extends Controller
         
         if (\Auth::check()) {    //認証済みの場合
             $user = \Auth::user();
-            $status = $user->tasks()->orderBy("created_at","desc")->paginate(10);
             $tasks = $user->tasks()->orderBy("created_at","desc")->paginate(10);
             $data = [
                 "user" => $user,
-                "status" => $status,
                 "tasks" => $tasks,
             ];
         }
@@ -82,13 +80,13 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
-        
+        //認証済みユーザがそのタスク登録者である場合はタスクを削除
         if(\Auth::id() === $task->user_id) {
-           return view("tasks.show",[
+            return view("tasks.show",[
             "task" => $task,
             ]);
         }
-        return redirect("/");
+        return redirect('/');
     }
 
     /**
@@ -100,10 +98,12 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-        
+        if(\Auth::id() === $task->user_id){
         return view("tasks.edit",[
             "task" => $task,
         ]);
+        }
+        return redirect('/');
     }
 
     /**
@@ -122,9 +122,7 @@ class TaskController extends Controller
         ]);
         
         $task = Task::findOrFail($id);
-        
-        if(\Auth::id() === $task->user_id){
-        
+        if(\Auth::id() === $task->use_id){
         //タスクの更新
         $task->status = $request->status;
         $task->content = $request->content;
@@ -132,9 +130,9 @@ class TaskController extends Controller
         
         return redirect('/');
         }
-        
-        return redirect("/");
+        return redirect('/');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -145,7 +143,6 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        
         //認証済みユーザがそのタスク登録者である場合はタスクを削除
         if(\Auth::id() === $task->user_id) {
             $task->delete();
