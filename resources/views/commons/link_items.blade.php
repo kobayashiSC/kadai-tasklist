@@ -2,7 +2,7 @@
     {{--タスクの新規登録ページへのリンク --}}
     <li><a class="link link-hover" href="{{ route("tasks.create") }}">タスクの新規登録</a></li>
     {{--ログアウトへのリンク--}}
-    <li><a class="link link-hover" href="#" onclick="event.preventDefault();this.closest("form").submit();">Logout</a></li>
+    <li><a class="link link-hover" href="#" onclick="event.preventDefault();this.closest('form').submit();">Logout</a></li>
 @else
     {{--ユーザ登録ページへのリンク--}}
     <li><a class="link link-hover" href="{{ route("register") }}">Signup</a></li>
